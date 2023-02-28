@@ -1,0 +1,70 @@
+# mm HH DD MM DW
+#  \  \  \  \  \__ Days of week
+#   \  \  \  \____ Months
+#    \  \  \______ Days
+#     \  \________ Hours
+#      \__________ Minutes
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Daily midnight build
+    always: "true"
+    branches:
+      include:
+        - main
+        - feature/*
+
+trigger:
+  branches:
+    include:
+      - user/*
+      - feature/*
+      - epic/*
+      - main
+  paths:
+    exclude:
+      - Samples
+
+resources:
+  repositories:
+  - repository: PipelineTemplates
+    type: git
+    name: VirtualMonoRepo/Vmr.PipelineTemplates
+    ref: main
+
+variables:
+  - template: PipelineTemplates/Variables.yml@PipelineTemplates
+    parameters:
+      Major: 1
+      Minor: 2
+      Patch: 3
+      PreRelease: "Preview.4"
+      ${{ if contains(variables['Build.SourceBranch'], 'release') }}:
+        IsRelease: 'true'
+      ${{ if not(contains(variables['Build.SourceBranch'], 'release')) }}:
+        IsRelease: 'false'
+
+parameters:
+  - name: poolImage
+    displayName: Pool Image
+    type: string
+    default: ubuntu-latest
+    values:
+      - ubuntu-latest
+      - ubuntu-22.04
+      - ubuntu-20.04
+      - windows-latest
+      - windows-2022
+      - windows-2019
+      - macOS-latest
+      - macOS-12
+      - macOS-11
+
+  - name: CreateDebugArtifact
+    displayName: Create Debug Artifact
+    type: boolean
+    default: 'false'
+
+stages:
+  - template: PipelineTemplates/Pipelines/DotnetLibrary.yml@PipelineTemplates
+    parameters:
+      CreateDebugArtifact: ${{ parameters.CreateDebugArtifact }}
