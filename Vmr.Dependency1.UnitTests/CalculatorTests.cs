@@ -1,5 +1,3 @@
-using Vrm.Dependency1;
-
 namespace Vmr.Dependency1.UnitTests
 {
     [TestClass]

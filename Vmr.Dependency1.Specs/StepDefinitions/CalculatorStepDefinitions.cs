@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using Vrm.Dependency1;
 
 namespace Vmr.Dependency1.Specs.StepDefinitions
 {

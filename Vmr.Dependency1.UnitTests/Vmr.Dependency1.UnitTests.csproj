@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vrm.Dependency1\Vrm.Dependency1.csproj" />
+    <ProjectReference Include="..\Vmr.Dependency1\Vmr.Dependency1.csproj" />
   </ItemGroup>
 
 </Project>

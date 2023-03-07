@@ -1,4 +1,4 @@
-﻿namespace Vrm.Dependency1
+﻿namespace Vmr.Dependency1
 {
     public class Calculator
     {
